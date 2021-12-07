@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Spotify
+//  SpotifyClone
 //
-//  Created by Michael Stiles on 12/5/21.
+//  Created by Michael Stiles on 12/4/21.
 //
 
 import UIKit
@@ -10,10 +10,23 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+        var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        if AuthManager.shared.isSignedIn {
+            window.rootViewController = TabBarViewController()
+        }
+        else {
+            let navVC = UINavigationController(rootViewController: WelcomeViewController())
+            navVC.navigationBar.prefersLargeTitles = true
+            navVC.viewControllers.first?.navigationItem.largeTitleDisplayMode = .always
+            window.rootViewController = navVC
+        }
+        
+        window.makeKeyAndVisible()
+        self.window = window
         return true
     }
 
